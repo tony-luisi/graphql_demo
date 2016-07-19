@@ -20,6 +20,7 @@
   "dependencies": {
     "express": "^4.14.0",
     "express-graphql": "^0.5.3",
+    "firebase": "^3.2.0",
     "graphql": "^0.6.1"
   }
 }
