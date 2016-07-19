@@ -6,8 +6,9 @@ firebase.initializeApp({
 })
 
 var data = require('./data.json')
+var arrayData = ['a', 'b', 'd', 45, false]
 
 var db = firebase.database()
 var ref = db.ref('server')
 
-var usersRef = ref.child('users')
+var usersRef = ref.child('test').set(arrayData)
