@@ -1,11 +1,12 @@
+var express = require('express')
+var router = express.Router()
 var graphql = require('graphql')
 var graphqlHTTP = require('express-graphql')
-var express = require('express')
 
-var data = require('./data.json')
+var pokemon = require('../../db/pokemon.json')
 
-var userType = new graphql.GraphQLObjectType({
-  name: 'User',
+var pokemonType = new graphql.GraphQLObjectType({
+  name: 'Pokemon',
   fields: {
     id: { type: graphql.GraphQLString },
     name: { type: graphql.GraphQLString }
@@ -16,21 +17,19 @@ var schema = new graphql.GraphQLSchema({
   query: new graphql.GraphQLObjectType({
     name: 'Query',
     fields: {
-      user: {
-        type: userType,
+      pokemon: {
+        type: pokemonType,
         args: {
           id: { type: graphql.GraphQLString }
         },
         resolve: function(_, args) {
-          return data[args.id]
+          return pokemon[args.id]
         }
       }
     }
   })
 })
 
-express()
-  .use('/graphql', graphqlHTTP({ schema: schema, pretty: true}))
-  .listen(3000)
+router.get('/', graphqlHTTP({ schema: schema, pretty: true}))
 
-console.log('GraphQL server running on http://localhost:3000/graphql');
+module.exports = router
